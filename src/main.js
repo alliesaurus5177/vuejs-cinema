@@ -10,6 +10,7 @@ moment.tz.setDefault("UTC");
 Object.defineProperty(Vue.prototype, '$moment', { get() { return this.$root.moment} });//makes moment accesible by child components
 
 import { checkFilter } from './util/bus';
+import { setDay } from './util/bus';
 const bus = new Vue();
 Object.defineProperty(Vue.prototype, '$bus', { get() {return this.$root.bus} });
 
@@ -18,6 +19,9 @@ Vue.use(VueRouter);
 
 import routes from './util/routes';
 const router = new VueRouter({ routes });
+
+import Tooltip from './util/tooltip';
+Vue.use(Tooltip);
 
 new Vue({
 	el: '#app',
@@ -35,6 +39,10 @@ new Vue({
 		}); //to do API call 
 
 		this.$bus.$on('check-filter', checkFilter.bind(this));
+		this.$bus.$on('set-day', setDay.bind(this));
 	}, 
 	router
 });
+
+
+
